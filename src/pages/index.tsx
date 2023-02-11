@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <Head>
@@ -10,8 +10,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>Hello World</div>
+        <div className="bg-blue-300">Hello World</div>
+        <div>Este es otro div</div>
       </main>
     </>
   );
-}
+};
+
+export default Home;
