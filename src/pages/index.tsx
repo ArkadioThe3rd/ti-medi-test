@@ -1,4 +1,6 @@
 import Head from "next/head";
+export const title = "HelloWorld";
+export const title2 = "Este es otro div";
 
 const Home = () => {
   return (
@@ -10,8 +12,8 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="bg-blue-300">Hello World</div>
-        <div>Este es otro div</div>
+        <div className="bg-blue-300">{title}</div>
+        <div>{title2}</div>
       </main>
     </>
   );
