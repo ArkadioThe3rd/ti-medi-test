@@ -17,12 +17,14 @@ const SearchBar = ({ searchHandler, className }: ISearchBar) => {
       className={`bg-gray-300 pl-3 pr-1  h-11 border rounded-lg flex flex-row items-center ${className}`}
     >
       <input
+        role={"search"}
         className="bg-transparent flex-auto outline-none"
         placeholder="Search Github repositories"
         type="text"
         onChange={(e) => inputHandler(e)}
       />
       <button
+        role="button"
         aria-label="search"
         type="button"
         onClick={() => searchHandler?.(busqueda)}

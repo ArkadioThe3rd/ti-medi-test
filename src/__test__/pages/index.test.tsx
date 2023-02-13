@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
-import Home, { title } from "../../pages/index";
+import Home from "../../pages/index";
 
-describe("Home", () => {
+describe("Testing Home", () => {
   test("Home", () => {
-    const { getByText } = render(<Home />);
-    const miTitulo = getByText(title);
-    expect(miTitulo.className).toBe("bg-blue-300");
+    const { getByRole, container } = render(<Home />);
+    expect(getByRole("main")).toBeVisible();
+    expect(getByRole("main")).toHaveClass("flex flex-col items-center");
   });
 });

@@ -1,6 +1,7 @@
 import { IData } from "@/repo/ContextDefault";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { resolve } from "path";
 
 interface INombreColumnas {
   id: string;
@@ -43,16 +44,29 @@ const nombreColumnas: INombreColumnas[] = [
 ];
 
 const Tabla = ({ data }: ITable) => {
-  const [showList, setShowList] = useState<IData[] | undefined>(data);
+  const [list, setList] = useState<IData[] | undefined>(data);
+  const [showList, setShowList] = useState<IData[] | undefined>();
+
+  const goToRepo = (url: string) => {
+    window.open(url);
+  };
+
+  const handleShowList = () => {
+    let nuevoArreglo = list?.slice(0, 10);
+    setShowList(nuevoArreglo);
+  };
 
   useEffect(() => {
     setShowList(data);
-    console.log(showList);
+    // setList(data);
+    // handleShowList();
+    // console.log(showList);
   }, [data]);
+
   return (
     <table className="table-auto w-3/4 text-center">
       <thead>
-        <tr className="bg-gray-300 border-b border-gray-400">
+        <tr className="bg-gray-300 border-b border-gray-400 ">
           {nombreColumnas.map((columna, index) => {
             let bordeD = "border-r";
             if (index === nombreColumnas.length - 1) bordeD = "";
@@ -75,8 +89,10 @@ const Tabla = ({ data }: ITable) => {
 
           return (
             <tr
-              className={`${bg} border-b border-gray-300 hover:bg-gray-300`}
+              aria-hidden
+              className={`${bg} border-b cursor-pointer border-gray-300 hover:bg-gray-300`}
               key={llave}
+              onClick={() => goToRepo(item.url_repo)}
             >
               <td>{item.nombre_repo}</td>
               <td>{item.nombre_owner}</td>
