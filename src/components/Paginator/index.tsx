@@ -1,41 +1,45 @@
 import { useState } from "react";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
-const Paginator = () => {
-  const [state, setState] = useState({
-    page: 1,
-    length: 5,
-    results: 50,
-    jump: 10,
-  });
+interface IPaginador {
+  lengthList: number;
+  resultsList: number;
+  jumpList: number;
+  handler(e: number): void;
+}
 
-  const { page, length, results, jump } = state;
+const Paginator = ({
+  lengthList,
+  resultsList,
+  jumpList,
+  handler,
+}: IPaginador) => {
+  // borrar estado y pasar los datos de una.
+  const [page, setPage] = useState(1);
 
   const pageSelector =
     "flex items-center px-3 py-1 bg-gray-400 hover:bg-gray-300 cursor-pointer";
 
   const moveLeft = () => {
-    setState({
-      ...state,
-      page: page > 1 ? page - 1 : 1,
-    });
-    console.log(page);
+    let pagina: number = page;
+    pagina = pagina > 1 ? pagina - 1 : 1;
+    setPage(pagina);
+    handler(pagina);
   };
 
   const moveRight = () => {
-    setState({
-      ...state,
-      page: page < length ? page + 1 : length,
-    });
-    console.log(page);
+    let pagina: number = page;
+    pagina = pagina < lengthList ? pagina + 1 : lengthList;
+    setPage(pagina);
+    handler(pagina);
   };
 
   return (
     <div className="flex flex-row items-center my-3">
-      <p className="mr-3 text-blue-600">{`${results} results`}</p>
+      <p className="mr-3 text-blue-600">{`${resultsList} results`}</p>
       <div className="flex flex-row select-none bg-gray-400 rounded">
         <div
-          aria-hidden
+          role={"button"}
           onClick={moveLeft}
           className={`${pageSelector} rounded-l`}
         >
@@ -43,14 +47,14 @@ const Paginator = () => {
         </div>
         <div className="mx-2">{page}</div>
         <div
-          aria-hidden
           onClick={moveRight}
+          role={"button"}
           className={`${pageSelector} rounded-r`}
         >
           <IoMdArrowDropright />
         </div>
       </div>
-      <p className="ml-3 text-blue-600">{`${jump} por pagina`}</p>
+      <p className="ml-3 text-blue-600">{`${jumpList} por pagina`}</p>
     </div>
   );
 };
