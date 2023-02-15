@@ -10,13 +10,18 @@ const DataProvider = ({ children }: IDataProvider) => {
   const [searchData, setSearchData] = useState<IData[]>([]);
 
   const searchRepositories = async (e: string) => {
-    await getData(e)?.then((response) => {
-      const miRespuesta = response;
-      console.log(miRespuesta);
-      if (miRespuesta?.data.items !== null) {
-        seleccionarInformacion(miRespuesta.data.items);
-      }
-    });
+    await getData(e)
+      ?.then((response) => {
+        console.log(response);
+        const miRespuesta = response;
+        console.log(miRespuesta);
+        if (miRespuesta?.data.items !== null) {
+          seleccionarInformacion(miRespuesta.data.items);
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const seleccionarInformacion = (items: any) => {
@@ -38,10 +43,6 @@ const DataProvider = ({ children }: IDataProvider) => {
       setSearchData(nuevoArreglo);
     }
   };
-
-  useEffect(() => {
-    console.log(searchData);
-  }, [searchData]);
 
   return (
     <DataContext.Provider value={{ searchData, searchRepositories }}>
