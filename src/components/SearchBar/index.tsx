@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ISearchBar {
   className?: string;
   searchHandler?(e?: string): void;
+  isInvalid: boolean;
 }
 
-const SearchBar = ({ searchHandler, className }: ISearchBar) => {
+const SearchBar = ({ searchHandler, className, isInvalid }: ISearchBar) => {
   const [busqueda, setBusqueda] = useState("");
-
+  const [invalidClass, setInvalidClass] = useState("");
   const inputHandler = (e: any) => {
     setBusqueda(e.target.value);
   };
 
+  useEffect(() => {
+    console.log(isInvalid);
+    if (isInvalid) {
+      setInvalidClass("border-red-400");
+    } else {
+      setInvalidClass("");
+    }
+  }, [isInvalid]);
+
   return (
     <div
-      className={`bg-gray-300 pl-3 pr-1  h-11 border rounded-lg flex flex-row items-center ${className}`}
+      className={`bg-gray-300 pl-3 pr-1   h-11 border rounded-lg flex flex-row items-center ${className} ${invalidClass}`}
     >
       <input
         role={"search"}

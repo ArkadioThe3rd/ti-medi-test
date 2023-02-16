@@ -15,11 +15,15 @@ export interface IData {
 interface IContext {
   searchData?: IData[];
   searchRepositories(e: string): void;
+  isInvalid: boolean;
+  noResults: boolean;
 }
 
 const context: IContext = {
   searchData: undefined,
   searchRepositories: () => {},
+  isInvalid: false,
+  noResults: false,
 };
 
 export default React.createContext(context);

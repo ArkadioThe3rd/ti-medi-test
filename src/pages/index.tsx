@@ -12,7 +12,6 @@ interface IStateList {
 }
 
 const Home = () => {
-  // const [listData, setListData] = useState<IData[] | undefined>([]);
   const [stateList, setStateList] = useState<IStateList>({
     listData: [],
     currentPage: 1,
@@ -40,10 +39,10 @@ const Home = () => {
 
   useEffect(() => {
     if (dataContext.searchData?.length !== 0) {
-      // setListData(dataContext.searchData);
       setListData();
       setListActive(true);
     }
+    console.log(listData);
   }, [dataContext.searchData]);
 
   return (
@@ -58,7 +57,13 @@ const Home = () => {
         <SearchBar
           className="w-3/4 my-8"
           searchHandler={dataContext.searchRepositories}
+          isInvalid={dataContext.isInvalid}
         />
+        {dataContext.noResults && (
+          <h2 className="text-red-400 font-semibold">
+            No se encontraron repositorios para esta busqueda!
+          </h2>
+        )}
         {listActive && (
           <div className="flex flex-col items-center h-4/5">
             <div className="flex flex-col items-center h-3/4 w-3/4 overflow-auto">
