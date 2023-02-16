@@ -3,7 +3,7 @@ import { fireEvent, render } from "@testing-library/react";
 
 describe("SearchBar Test", () => {
   test("SearchBar", () => {
-    const { container, getByRole } = render(<SearchBar />);
+    const { container, getByRole } = render(<SearchBar isInvalid={false} />);
     expect(container).toBeVisible();
     expect(getByRole("search")).toHaveClass(
       "bg-transparent flex-auto outline-none"

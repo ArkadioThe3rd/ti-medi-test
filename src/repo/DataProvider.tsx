@@ -8,20 +8,27 @@ interface IDataProvider {
 
 const DataProvider = ({ children }: IDataProvider) => {
   const [searchData, setSearchData] = useState<IData[]>([]);
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
   const searchRepositories = async (e: string) => {
-    await getData(e)
-      ?.then((response) => {
-        console.log(response);
+    if (e !== "") {
+      setIsInvalid(false);
+      await getData(e)?.then((response) => {
         const miRespuesta = response;
         console.log(miRespuesta);
         if (miRespuesta?.data.items !== null) {
+          setNoResults(false);
           seleccionarInformacion(miRespuesta.data.items);
         }
-      })
-      .catch((error) => {
-        console.log(error.message);
+        if (miRespuesta?.data.total_count === 0) {
+          console.log("entro");
+          setNoResults(true);
+        }
       });
+    } else {
+      setIsInvalid(true);
+    }
   };
 
   const seleccionarInformacion = (items: any) => {
@@ -45,7 +52,9 @@ const DataProvider = ({ children }: IDataProvider) => {
   };
 
   return (
-    <DataContext.Provider value={{ searchData, searchRepositories }}>
+    <DataContext.Provider
+      value={{ searchData, searchRepositories, isInvalid, noResults }}
+    >
       {children}
     </DataContext.Provider>
   );
